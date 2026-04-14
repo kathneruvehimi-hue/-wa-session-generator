@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Session Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { background: #000428; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        .box { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 50px; border: 1px solid #00d2ff; }
+        input { padding: 12px; border-radius: 5px; border: none; width: 80%; margin-bottom: 15px; font-size: 16px; }
+        button { background: #00d2ff; color: white; border: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        #result { margin-top: 25px; font-size: 28px; color: #00ff88; font-weight: bold; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>WhatsApp Session ID</h2>
+        <p>Enter number with country code (947...)</p>
+        <input type="text" id="phone" placeholder="947xxxxxxxx">
+        <br>
+        <button onclick="getCode()">Get Pairing Code</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        async function getCode() {
+            const phone = document.getElementById('phone').value;
+            const resDiv = document.getElementById('result');
+            if(!phone) return alert("නම්බර් එක ගහපන් මචං!");
+            resDiv.innerText = "Generating...";
+            const response = await fetch(`/pair?phone=${phone}`);
+            const data = await response.json();
+            if(data.code) { resDiv.innerText = data.code; }
+            else { resDiv.innerText = "Error! Try Again."; }
+        }
+    </script>
+</body>
+</html>
+
